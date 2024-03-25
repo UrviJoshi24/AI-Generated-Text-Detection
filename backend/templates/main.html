@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Generated Text Detection</title>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-image: url("/static/image.jpeg");
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        .ques{
+            border-radius: 30px;
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            width: 70%;
+            height: 7%;
+            text-align: center;
+            font-size: 120%;
+            background-color: rgb(131, 18, 165); 
+            color: white;
+        }
+        .menu:checked {
+            background: linear-gradient(#d6d6d6, #d6d6d6);
+            background-color: #d6d6d6 !important; /* for IE */
+            color: #000000 !important;
+        }
+        .text{
+            font-family: 'Times New Roman';
+            font-size: 120%;
+            color: white;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            width:70%;
+            height: 40%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(131, 18, 165); 
+        }
+        ::placeholder {
+            color: white;
+            opacity: 0.8; /* Firefox */
+        }
+        .sub{
+            position: absolute;
+            top: 70%;
+            right: 15%;
+            background-color: rgb(100, 14, 162); 
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 16px 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .back{
+            position: absolute;
+            top: 70%;
+            right: 27%;
+            background-color: rgb(100, 14, 162); 
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 16px 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .sub:hover,
+        .back:hover{
+            color: black;
+            background-color: rgb(164, 124, 193);
+            box-shadow: 0 12px 16px 0 rgba(52, 52, 52, 0.15), 0 17px 50px 0 rgba(52, 52, 52, 0.15);
+        }
+        .pred{
+            font-family: 'Times New Roman';
+            font-size: 140%;
+            text-align: center;
+            width: 50%;
+            padding: 9px;
+            background-color: rgb(0, 0, 0); 
+            position: absolute;
+            bottom: 10%;
+            right: 25%;
+            color: rgb(164, 124, 193);
+        }
+    </style>
+</head>
+<body>
+    <form id="prediction-form" action="{% url 'predict_label' %}" method="post">
+        {% csrf_token %}
+        <select id="question-select" name="question" class="ques">
+            <option value="ques1" class="menu" selected>Describe a moment when you felt overwhelming happiness or joy.</option>
+            <option value="ques2" class="menu">Share your personal opinion on the impact of social media on society.</option>
+            <option value="ques3" class="menu">Discuss a cultural tradition that is significant to you.</option>
+            <option value="ques4" class="menu">Share your thoughts on a recent local news event.</option>
+            <option value="ques5" class="menu">Describe a memorable travel experience and its impact on your life.</option>
+            <option value="ques6" class="menu">Discuss the role of technology in modern education.</option>
+            <option value="ques7" class="menu">Tell me about yourself.</option>
+        </select>
+        <textarea id="answer-text" name="answer" class="text" placeholder="Type your Answer"></textarea> 
+        <button type="submit" class="sub">Submit</button>
+    </form>
+    <a href="{% url 'home' %}">
+        <button class="back">Back</button>
+    </a>
+    <div class="pred" id="prediction-result">
+        Prediction: <span id="prediction-text"></span>
+        Accuracy: <span id="accuracy-text"></span>
+    </div>
+  
+</body>
+</html>
