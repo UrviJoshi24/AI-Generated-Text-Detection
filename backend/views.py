@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from sklearn.metrics import accuracy_score
@@ -122,10 +123,21 @@ def predict_label(request):
         predicted_label = "human" if prediction[0] == 1 else "AI"
 
         # Return the prediction and accuracy
-        response_data = {
-            'prediction': predicted_label,
-            'accuracy': accuracy
-        }
-        return JsonResponse(response_data)
+        # response_data = f'{{ "prediction": "{predicted_label}", "answer": {answer} }}'
+        response_data = { 'prediction': predicted_label, 'answer': answer, 'question': question_code }
+        json_data = json.dumps(response_data)
+        return render(request, "main.html", {'data': json_data})
+        # return JsonResponse(response_data)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+# def get_data(request):
+#     # Get the data from the database or other source
+#     data = {
+#         'name': 'John Doe',
+#         'age': 30,
+#         'city': 'New York',
+#     }
+#     # Return the data as a JSON response
+#     return JsonResponse(data)

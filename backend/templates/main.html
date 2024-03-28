@@ -78,7 +78,7 @@
         .sub:hover,
         .back:hover{
             color: black;
-            background-color: rgb(164, 124, 193);
+            background-color: #6d3c7e;
             box-shadow: 0 12px 16px 0 rgba(52, 52, 52, 0.15), 0 17px 50px 0 rgba(52, 52, 52, 0.15);
         }
         .pred{
@@ -92,6 +92,16 @@
             bottom: 10%;
             right: 25%;
             color: rgb(164, 124, 193);
+        }
+        .pred ul{
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        .pred ul li{
+            display: inline;
+            padding-left: 7%;
+            padding-right: 7%;
         }
     </style>
 </head>
@@ -114,9 +124,20 @@
         <button class="back">Back</button>
     </a>
     <div class="pred" id="prediction-result">
-        Prediction: <span id="prediction-text"></span>
-        Accuracy: <span id="accuracy-text"></span>
+        <ul>
+            <li>Prediction: <span id="prediction-text"></span></li>
+        </ul>
     </div>
-  
+    <script>
+        var data = JSON.parse('{{ data|safe }}');
+    var prediction = data.prediction;
+    var answer = data.answer;
+    var question = data.question;
+
+    document.getElementById('prediction-text').textContent = prediction;
+    document.getElementById('answer-text').textContent = answer;
+    document.getElementById('question-select').value = question; 
+        
+    </script>
 </body>
 </html>
